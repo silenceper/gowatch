@@ -11,8 +11,14 @@
 		{
 			"checksumSHA1": "YW1Gk1S7X/WjdjkXH6JPDLSq09c=",
 			"path": "github.com/nestgo/log",
-			"revision": "e16c7c2bd232fc73aa50349aed7e2ef3e98513c3",
-			"revisionTime": "2016-12-24T17:01:17Z"
+			"revision": "02f564f986b20803639bcbc3f106e17c50a9e2f0",
+			"revisionTime": "2016-12-24T17:04:52Z"
+		},
+		{
+			"checksumSHA1": "C01MqZp5G0X2eKm7MdinO2zjJJA=",
+			"path": "github.com/silenceper/gowatch",
+			"revision": "e30fb0ab6514fbc4fa8f4c54eceb1f36271a72f1",
+			"revisionTime": "2016-12-24T17:06:31Z"
 		},
 		{
 			"checksumSHA1": "MGk7cSnHqiL5soaovzgcJaNH3fc=",
