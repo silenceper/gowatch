@@ -1,0 +1,16 @@
+# gowatch.yml 配置示例
+#
+#appname: "test"
+#go_install: true
+#watch_exts:
+#    - .yml
+#cmd_args:
+#    - arg1=val1
+#envs:
+#    - a=b
+#vendor_watch: false
+
+#excluded_paths:
+#    - path
+#
+#build_tags: ""
