@@ -11,7 +11,11 @@ Go 程序热编译工具，提升开发效率
 go install github.com/silenceper/gowatch
 ``` 
 
-安装完成之后，即可使用`gowatch`命令，在当前文件执行
+安装完成之后，即可使用`gowatch`命令，在当前文件执行:
+
+![gowatch](./screenshot/gowatch.png)
+
+当文件变动会重新编译并执行。
 
 ### 相关配置
 
