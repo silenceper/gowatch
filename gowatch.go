@@ -1,14 +1,12 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	path "path/filepath"
 	"regexp"
-	"runtime"
 	"strings"
 	"sync"
 	"time"
@@ -117,58 +115,26 @@ func Autobuild(files []string) {
 	cmdName := "go"
 
 	var err error
-	// For applications use full import path like "github.com/.../.."
-	// are able to use "go install" to reduce build time.
-	if false {
-		icmd := exec.Command("go", "list", "./...")
-		buf := bytes.NewBuffer([]byte(""))
-		icmd.Stdout = buf
-		icmd.Env = append(os.Environ(), "GOGC=off")
-		err = icmd.Run()
-		if err == nil {
-			list := strings.Split(buf.String(), "\n")[1:]
-			for _, pkg := range list {
-				if len(pkg) == 0 {
-					continue
-				}
-				icmd = exec.Command(cmdName, "install", pkg)
-				icmd.Stdout = os.Stdout
-				icmd.Stderr = os.Stderr
-				icmd.Env = append(os.Environ(), "GOGC=off")
-				err = icmd.Run()
-				if err != nil {
-					break
-				}
-			}
-		}
+
+	args := []string{"build"}
+	args = append(args, "-o", cfg.Output)
+	if cfg.BuildTags != "" {
+		args = append(args, "-tags", cfg.BuildTags)
 	}
+	args = append(args, files...)
 
-	if err == nil {
-		appName := cfg.AppName
-		if runtime.GOOS == "windows" {
-			appName += ".exe"
-		}
-
-		args := []string{"build"}
-		args = append(args, "-o", appName)
-		if cfg.BuildTags != "" {
-			args = append(args, "-tags", cfg.BuildTags)
-		}
-		args = append(args, files...)
-
-		bcmd := exec.Command(cmdName, args...)
-		bcmd.Env = append(os.Environ(), "GOGC=off")
-		bcmd.Stdout = os.Stdout
-		bcmd.Stderr = os.Stderr
-		err = bcmd.Run()
-	}
+	bcmd := exec.Command(cmdName, args...)
+	bcmd.Env = append(os.Environ(), "GOGC=off")
+	bcmd.Stdout = os.Stdout
+	bcmd.Stderr = os.Stderr
+	err = bcmd.Run()
 
 	if err != nil {
 		log.Errorf("============== Build failed ===================\n")
 		return
 	}
 	log.Infof("Build was successful\n")
-	Restart(cfg.AppName)
+	Restart(cfg.Output)
 }
 
 func Kill() {

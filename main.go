@@ -1,18 +1,27 @@
 package main
 
 import (
+	"flag"
 	"os"
 	path "path/filepath"
 	"runtime"
+	"strings"
 )
 
 var (
 	cfg      *config
 	currpath string
 	exit     chan bool
+	output   string
+	buildPkg string
 
 	started chan bool
 )
+
+func init() {
+	flag.StringVar(&output, "o", "", "go build output")
+	flag.StringVar(&buildPkg, "p", "", "go build packages")
+}
 
 var ignoredFilesRegExps = []string{
 	`.#(\w+).go`,
@@ -22,12 +31,30 @@ var ignoredFilesRegExps = []string{
 }
 
 func main() {
+	flag.Parse()
 	cfg = parseConfig()
 
 	currpath, _ = os.Getwd()
-	//app名默认去当前目录名
 	if cfg.AppName == "" {
-		cfg.AppName = path.Base(currpath)
+		//app名默认取目录名
+		if output == "" {
+			cfg.AppName = path.Base(currpath)
+		} else {
+			cfg.AppName = path.Base(output)
+		}
+	}
+
+	if output != "" {
+		cfg.Output = output
+	}
+
+	//如果未指定output则为"./appname"
+	if cfg.Output == "" {
+		outputExt := ""
+		if runtime.GOOS == "windows" {
+			outputExt = ".exe"
+		}
+		cfg.Output = "./" + cfg.AppName + outputExt
 	}
 
 	//监听的文件后缀
@@ -41,6 +68,9 @@ func runApp() {
 	readAppDirectories(currpath, &paths)
 
 	files := []string{}
+	if buildPkg != "" {
+		files = strings.Split(buildPkg, ",")
+	}
 	NewWatcher(paths, files)
 	Autobuild(files)
 	for {
