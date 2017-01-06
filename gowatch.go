@@ -228,15 +228,11 @@ func readAppDirectories(directory string, paths *[]string) {
 			readAppDirectories(directory+"/"+fileInfo.Name(), paths)
 			continue
 		}
-
 		if useDirectory == true {
 			continue
 		}
-
-		if path.Ext(fileInfo.Name()) == ".go" {
-			*paths = append(*paths, directory)
-			useDirectory = true
-		}
+		*paths = append(*paths, directory)
+		useDirectory = true
 	}
 	return
 }
