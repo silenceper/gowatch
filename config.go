@@ -15,8 +15,6 @@ type config struct {
 	AppName string `yaml:"appname"`
 	//指定ouput执行的程序路径
 	Output string `yaml:"output"`
-	//是否执行'go install'命令，执行安装依赖
-	GoInstall bool `yaml:"go_install"`
 	//需要追加监听的文件后缀名字，默认是'.go'，
 	WatchExts []string `yaml:"watch_exts"`
 	//执行时的额外参数
