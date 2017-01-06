@@ -13,8 +13,8 @@ var configFile = "./gowatch.yml"
 type config struct {
 	//执行的app名字，默认当前目录文字
 	AppName string `yaml:"appname"`
-	//是否执行'go install'命令，执行安装依赖
-	GoInstall bool `yaml:"go_install"`
+	//指定ouput执行的程序路径
+	Output string `yaml:"output"`
 	//需要追加监听的文件后缀名字，默认是'.go'，
 	WatchExts []string `yaml:"watch_exts"`
 	//执行时的额外参数

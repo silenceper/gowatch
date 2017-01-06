@@ -15,19 +15,28 @@ go get github.com/silenceper/gowatch
 
 ![gowatch](./screenshot/gowatch.png)
 
-当文件变动会重新编译并执行。
 
-### 相关配置
+### 命令行参数
 
-大部分情况下，不需要更改配置，直接执行`gowatch`命令就能满足的大部分的需要，但是也提供了一些配置用于自定义，在执行目录下创建`gowatch.yml`文件，支持的配置如下：
+- -o : 非必须，指定build的目标文件路径
+- -p : 非必须，指定需要build的package（也可以是单个文件）
+
+例子:
+
+`gowatch -o ./bin/demo -p ./cmd/demo`
+
+### 配置文件
+`gowatch.yml`
+
+大部分情况下，不需要更改配置，直接执行`gowatch`命令就能满足的大部分的需要，但是也提供了一些配置用于自定义，在执行目录下创建`gowatch.yml`文件:
 
 ```
 # gowatch.yml 配置示例
 
 # 当前目录执行下生成的可执行文件的名字，默认是当前目录名
 appname: "test"   
-# 是否对当前目录下相关依赖执行 ‘go install’命令，将会执行安装依赖
-go_install: true
+# 指定编译后的目标文件目录 
+output: /bin/demo
 # 需要监听的文件名后缀，默认只有'.go'文件
 watch_exts:
     - .yml
