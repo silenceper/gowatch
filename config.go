@@ -8,8 +8,6 @@ import (
 	"gopkg.in/yaml.v1"
 )
 
-var configFile = "./gowatch.yml"
-
 type config struct {
 	//执行的app名字，默认当前目录文字
 	AppName string `yaml:"appname"`
