@@ -9,17 +9,20 @@ import (
 )
 
 var (
-	cfg      *config
-	currpath string
-	exit     chan bool
-	output   string
-	buildPkg string
-	cmdArgs  string
+	cfg        *config
+	configFile string
+	currpath   string
+	exit       chan bool
+	output     string
+	buildPkg   string
+	cmdArgs    string
 
 	started chan bool
 )
 
 func init() {
+	flag.StringVar(
+		&configFile, "f", "./gowatch.yml", "the path of gowatch.yml")
 	flag.StringVar(&output, "o", "", "go build output")
 	flag.StringVar(&buildPkg, "p", "", "go build packages")
 	flag.StringVar(&cmdArgs, "args", "", "app run args,separated by commas. like: -args='-host=:8080,-name=demo'")
