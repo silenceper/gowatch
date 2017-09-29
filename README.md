@@ -9,7 +9,7 @@ Go 程序热编译工具，提升开发效率
 
 ```go
 go get github.com/silenceper/gowatch
-``` 
+```
 
 安装完成之后，即可使用`gowatch`命令，在当前文件执行:
 
@@ -34,12 +34,15 @@ go get github.com/silenceper/gowatch
 # gowatch.yml 配置示例
 
 # 当前目录执行下生成的可执行文件的名字，默认是当前目录名
-appname: "test"   
-# 指定编译后的目标文件目录 
+appname: "test"
+# 指定编译后的目标文件目录
 output: /bin/demo
-# 需要监听的文件名后缀，默认只有'.go'文件
+# 需要追加监听的文件名后缀，默认只有'.go'文件
 watch_exts:
     - .yml
+# 需要最贱监听的目录，默认只有当前目录
+watch_paths:
+    - ../pk
 # 在执行命令时，需要增加的其他参数
 cmd_args:
     - arg1=val1
