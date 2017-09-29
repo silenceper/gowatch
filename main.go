@@ -14,6 +14,7 @@ var (
 	exit     chan bool
 	output   string
 	buildPkg string
+	cmdArgs  string
 
 	started chan bool
 )
@@ -21,6 +22,7 @@ var (
 func init() {
 	flag.StringVar(&output, "o", "", "go build output")
 	flag.StringVar(&buildPkg, "p", "", "go build packages")
+	flag.StringVar(&cmdArgs, "args", "", "app run args,separated by commas. like: -args='-host=:8080,-name=demo'")
 }
 
 var ignoredFilesRegExps = []string{
@@ -55,6 +57,10 @@ func main() {
 			outputExt = ".exe"
 		}
 		cfg.Output = "./" + cfg.AppName + outputExt
+	}
+
+	if cmdArgs != "" {
+		cfg.CmdArgs = strings.Split(cmdArgs, ",")
 	}
 
 	//监听的文件后缀
