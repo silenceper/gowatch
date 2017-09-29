@@ -66,6 +66,10 @@ func main() {
 func runApp() {
 	var paths []string
 	readAppDirectories(currpath, &paths)
+	//除了当前目录，增加额外监听的目录
+	for _, path := range cfg.WatchPaths {
+		readAppDirectories(path, &paths)
+	}
 
 	files := []string{}
 	if buildPkg != "" {

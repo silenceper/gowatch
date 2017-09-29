@@ -17,6 +17,8 @@ type config struct {
 	Output string `yaml:"output"`
 	//需要追加监听的文件后缀名字，默认是'.go'，
 	WatchExts []string `yaml:"watch_exts"`
+	//需要追加监听的目录，默认是当前文件夹，
+	WatchPaths []string `yaml:"watch_paths"`
 	//执行时的额外参数
 	CmdArgs []string `yaml:"cmd_args"`
 	//执行时追加的环境变量
