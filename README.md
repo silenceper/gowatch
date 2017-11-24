@@ -54,6 +54,8 @@ vendor_watch: false
 # 不需要监听的目录名字
 excluded_paths:
     - path
+# main 包路径，也可以是单个文件，多个文件使用逗号分隔
+build_pkg: ""
 # build tags
 build_tags: ""
 

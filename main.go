@@ -78,6 +78,9 @@ func runApp() {
 	}
 
 	files := []string{}
+	if buildPkg == "" {
+		buildPkg = cfg.BuildPkg
+	}
 	if buildPkg != "" {
 		files = strings.Split(buildPkg, ",")
 	}
