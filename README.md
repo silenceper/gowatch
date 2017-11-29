@@ -1,34 +1,35 @@
 # gowatch
 
-Go 程序热编译工具，提升开发效率
+Golang program real-time compilation tools to enhance development efficiency
 
-通过监听当前目录下的相关文件变动，进行实时编译
+Real-time compilation by monitoring file changes in a specified directory
 
-
-### 安装使用
+### install
 
 ```go
 go get github.com/silenceper/gowatch
 ```
 
-安装完成之后，即可使用`gowatch`命令，在当前文件执行:
+After the installation is complete, you can use the `gowatch` command to execute in the main package:
 
+**screenshot：**
 ![gowatch](./screenshot/gowatch.png)
 
 
-### 命令行参数
+### Command line parameters
 
-- -o : 非必须，指定build的目标文件路径
-- -p : 非必须，指定需要build的package（也可以是单个文件）
+- -o : Optional，specify the target build path
+- -p : Optional，Specified the need to build the package, which can also be a single file
 
-例子:
+**example:**
 
 `gowatch -o ./bin/demo -p ./cmd/demo`
 
-### 配置文件
+### config file
+
 `gowatch.yml`
 
-大部分情况下，不需要更改配置，直接执行`gowatch`命令就能满足的大部分的需要，但是也提供了一些配置用于自定义，在执行目录下创建`gowatch.yml`文件:
+Most of the time, you do not need to change the configuration to do most of what you need to do with the `gowatch` command, but it also provides some configuration for customizing. Create the` gowatch.yml` file in the executable:
 
 ```
 # gowatch.yml 配置示例
@@ -62,4 +63,4 @@ build_tags: ""
 
 
 
->该项目参考 beego/bee 项目中的bee run 实现
+>This project refers to bee run in the beego / bee project
