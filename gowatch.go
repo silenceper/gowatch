@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/howeyc/fsnotify"
-	"github.com/nestgo/log"
+	"github.com/silenceper/log"
 )
 
 var (
