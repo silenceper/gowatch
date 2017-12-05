@@ -65,4 +65,4 @@ build_tags: ""
 
 
 
->This project refers to bee run in the beego / bee project
+>Inspired by [bee](https://github.com/beego/bee)
