@@ -32,30 +32,30 @@ After the installation is complete, you can use the `gowatch` command to execute
 Most of the time, you do not need to change the configuration to do most of what you need to do with the `gowatch` command, but it also provides some configuration for customizing. Create the` gowatch.yml` file in the executable:
 
 ```
-# gowatch.yml Configuration example
+# gowatch.yml 配置示例
 
-# The name of the generated executable file, the default is the current directory name
+# 当前目录执行下生成的可执行文件的名字，默认是当前目录名
 appname: "test"
-# specify the compiled target file directory
+# 指定编译后的目标文件目录
 output: /bin/demo
-# Need to monitor the additional file name suffix, the default only '.go' file
+# 需要追加监听的文件名后缀，默认只有'.go'文件
 watch_exts:
     - .yml
-# need to monitor the directory, the default only the current directory
+# 需要监听的目录，默认只有当前目录
 watch_paths:
     - ../pk
-# when the program is executed, additional parameters need to be added
+# 在执行命令时，需要增加的其他参数
 cmd_args:
     - arg1=val1
-# need to increase the additional environment variables, the default has been loaded by the current environment variables
+# 需要增加环境变量，默认已加载当前环境变量
 envs:
     - a=b
-# whether to monitor the 'vendor' folder under the file changes
+# 是否监听 ‘vendor’ 文件夹下的文件改变
 vendor_watch: false
-# do not need to listen to the directory
+# 不需要监听的目录名字
 excluded_paths:
     - path
-# main package path, can also be a single file, multiple files separated by commas
+# main 包路径，也可以是单个文件，多个文件使用逗号分隔
 build_pkg: ""
 # build tags
 build_tags: ""
