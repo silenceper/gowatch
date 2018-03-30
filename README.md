@@ -45,7 +45,10 @@ watch_paths:
     - ../pk
 # 在执行命令时，需要增加的其他参数
 cmd_args:
-    - arg1=val1
+    - -arg1
+    - val1
+    - -arg2
+    - val2
 # 需要增加环境变量，默认已加载当前环境变量
 envs:
     - a=b
