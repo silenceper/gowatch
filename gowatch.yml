@@ -5,7 +5,10 @@
 #watch_exts:
 #    - .yml
 #cmd_args:
-#    - arg1=val1
+#    - -arg1
+#    - val1
+#    - -arg2
+#    - val2
 #envs:
 #    - a=b
 #vendor_watch: false
