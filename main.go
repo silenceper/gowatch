@@ -9,12 +9,13 @@ import (
 )
 
 var (
-	cfg      *config
-	currpath string
-	exit     chan bool
-	output   string
-	buildPkg string
-	cmdArgs  string
+	cfg         *config
+	currpath    string
+	exit        chan bool
+	output      string
+	buildPkg    string
+	cmdArgs     string
+	showVersion bool
 
 	started chan bool
 )
@@ -23,6 +24,7 @@ func init() {
 	flag.StringVar(&output, "o", "", "go build output")
 	flag.StringVar(&buildPkg, "p", "", "go build packages")
 	flag.StringVar(&cmdArgs, "args", "", "app run args,separated by commas. like: -args='-host=:8080,-name=demo'")
+	flag.BoolVar(&showVersion, "v", false, "show version")
 }
 
 var ignoredFilesRegExps = []string{
@@ -34,8 +36,13 @@ var ignoredFilesRegExps = []string{
 
 func main() {
 	flag.Parse()
-	cfg = parseConfig()
 
+	if showVersion {
+		printVersion()
+		os.Exit(0)
+	}
+
+	cfg = parseConfig()
 	currpath, _ = os.Getwd()
 	if cfg.AppName == "" {
 		//app名默认取目录名

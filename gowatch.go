@@ -134,7 +134,9 @@ func Autobuild(files []string) {
 		return
 	}
 	log.Infof("Build was successful\n")
-	Restart(cfg.Output)
+	if !cfg.DisableRun {
+		Restart(cfg.Output)
+	}
 }
 
 func Kill() {
