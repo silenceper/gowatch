@@ -4,7 +4,6 @@ go:
   - 1.11.x
   - 1.10.x
   - 1.9.x
-  - 1.8.x
 
 before_script:
   - GO_FILES=$(find . -iname '*.go' -type f | grep -v /vendor/)
