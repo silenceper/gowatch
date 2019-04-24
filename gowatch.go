@@ -141,7 +141,7 @@ func Autobuild(files []string) {
 	}
 }
 
-//kill kill process
+//Kill kill process
 func Kill() {
 	defer func() {
 		if e := recover(); e != nil {
@@ -191,9 +191,8 @@ func shouldIgnoreFile(filename string) bool {
 		}
 		if r.MatchString(filename) {
 			return true
-		} else {
-			continue
 		}
+		continue
 	}
 	return false
 }
