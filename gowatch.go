@@ -22,6 +22,7 @@ var (
 	scheduleTime time.Time
 )
 
+//NewWatcher new watcher
 func NewWatcher(paths []string, files []string) {
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
@@ -104,6 +105,7 @@ func getFileModTime(path string) int64 {
 	return fi.ModTime().Unix()
 }
 
+//Autobuild auto build
 func Autobuild(files []string) {
 	state.Lock()
 	defer state.Unlock()
@@ -134,9 +136,12 @@ func Autobuild(files []string) {
 		return
 	}
 	log.Infof("Build was successful\n")
-	Restart(cfg.Output)
+	if !cfg.DisableRun {
+		Restart(cfg.Output)
+	}
 }
 
+//Kill kill process
 func Kill() {
 	defer func() {
 		if e := recover(); e != nil {
@@ -151,12 +156,14 @@ func Kill() {
 	}
 }
 
+//Restart restart app
 func Restart(appname string) {
 	//log.Debugf("kill running process")
 	Kill()
 	go Start(appname)
 }
 
+//Start start app
 func Start(appname string) {
 	log.Infof("Restarting %s ...\n", appname)
 	if strings.Index(appname, "./") == -1 {
@@ -184,9 +191,8 @@ func shouldIgnoreFile(filename string) bool {
 		}
 		if r.MatchString(filename) {
 			return true
-		} else {
-			continue
 		}
+		continue
 	}
 	return false
 }
