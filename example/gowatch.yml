@@ -1,16 +1,25 @@
 # gowatch.yml 配置示例
 #
-#appname: "test"
-#go_install: true
+# 程序名称
+appname: "example"
+
+# Output
+output: ./example
+
 #watch_exts:
 #    - .yml
+
 #cmd_args:
 #    - arg1=val1
+
 #envs:
 #    - a=b
+
 #vendor_watch: false
 
 #excluded_paths:
 #    - path
-#
+
 #build_tags: ""
+
+disable_run: false

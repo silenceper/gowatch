@@ -31,6 +31,8 @@ type config struct {
 	BuildPkg string `yaml:"build_pkg"`
 	//在go build 时期接收的-tags参数
 	BuildTags string `yaml:"build_tags"`
+	//程序是否自动运行
+	DisableRun bool `yaml:"disable_run"`
 }
 
 func parseConfig() *config {
