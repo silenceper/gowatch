@@ -26,3 +26,4 @@ _testmain.go
 vendor/*/
 gowatch
 /bin
+.idea/
