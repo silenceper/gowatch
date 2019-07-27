@@ -112,7 +112,10 @@ func Autobuild(files []string) {
 
 	log.Infof("Start building...\n")
 
-	os.Chdir(currpath)
+	if err := os.Chdir(currpath); err != nil {
+		log.Errorf("Chdir Error: %+v\n", err)
+		return
+	}
 
 	cmdName := "go"
 
@@ -120,6 +123,7 @@ func Autobuild(files []string) {
 
 	args := []string{"build"}
 	args = append(args, "-o", cfg.Output)
+	args = append(args, cfg.BuildArgs...)
 	if cfg.BuildTags != "" {
 		args = append(args, "-tags", cfg.BuildTags)
 	}
@@ -129,10 +133,12 @@ func Autobuild(files []string) {
 	bcmd.Env = append(os.Environ(), "GOGC=off")
 	bcmd.Stdout = os.Stdout
 	bcmd.Stderr = os.Stderr
+	log.Infof("Build Args: %s %s", cmdName, strings.Join(args, " "))
 	err = bcmd.Run()
 
 	if err != nil {
 		log.Errorf("============== Build failed ===================\n")
+		log.Errorf("%+v\n", err)
 		return
 	}
 	log.Infof("Build was successful\n")
@@ -175,8 +181,9 @@ func Start(appname string) {
 	cmd.Stderr = os.Stderr
 	cmd.Args = append([]string{appname}, cfg.CmdArgs...)
 	cmd.Env = append(os.Environ(), cfg.Envs...)
-
+	log.Infof("Run %s %s", appname, strings.Join(cmd.Args, " "))
 	go cmd.Run()
+
 	log.Infof("%s is running...\n", appname)
 	started <- true
 }

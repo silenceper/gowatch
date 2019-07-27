@@ -51,6 +51,9 @@ watch_paths:
 # 在执行命令时，需要增加的其他参数
 cmd_args:
     - arg1=val1
+# 在构建命令时，需要增加的其他参数
+build_args:
+    - -race
 # 需要增加环境变量，默认已加载当前环境变量
 envs:
     - a=b

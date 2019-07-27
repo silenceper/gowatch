@@ -21,6 +21,8 @@ type config struct {
 	WatchPaths []string `yaml:"watch_paths"`
 	//执行时的额外参数
 	CmdArgs []string `yaml:"cmd_args"`
+	//构建时的额外参数
+	BuildArgs []string `yaml:"build_args"`
 	//执行时追加的环境变量
 	Envs []string `yaml:"envs"`
 	//vendor 目录下的文件是否也监听

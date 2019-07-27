@@ -12,6 +12,9 @@ output: ./example
 #cmd_args:
 #    - arg1=val1
 
+#build_args:
+#    - -race
+
 #envs:
 #    - a=b
 
