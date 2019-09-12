@@ -181,7 +181,7 @@ func Start(appname string) {
 	cmd.Stderr = os.Stderr
 	cmd.Args = append([]string{appname}, cfg.CmdArgs...)
 	cmd.Env = append(os.Environ(), cfg.Envs...)
-	log.Infof("Run %s %s", appname, strings.Join(cmd.Args, " "))
+	log.Infof("Run %s", strings.Join(cmd.Args, " "))
 	go cmd.Run()
 
 	log.Infof("%s is running...\n", appname)
