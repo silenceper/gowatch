@@ -55,9 +55,10 @@ func NewWatcher(paths []string, files []string) {
 				if isbuild {
 					go func() {
 						// Wait 1s before autobuild util there is no file change.
-						scheduleTime = time.Now().Add(1 * time.Second)
+						scheduleTime = time.Now().Add(4 * time.Second)
 						for {
 							time.Sleep(scheduleTime.Sub(time.Now()))
+							log.Errorf("%v", time.Now().After(scheduleTime))
 							if time.Now().After(scheduleTime) {
 								break
 							}
@@ -91,9 +92,19 @@ func getFileModTime(path string) int64 {
 	path = strings.Replace(path, "\\", "/", -1)
 	f, err := os.Open(path)
 	if err != nil {
-		log.Errorf("Fail to open file[ %s ]\n", err)
-		return time.Now().Unix()
+		// Use GoLand on windows7-64 find this error "The system cannot find the file specified." and "The process cannot access the file because it is being used by another process."
+		// When find this error sleep 3 second try again.
+		if strings.Contains(err.Error() , "The system cannot find the file specified.")  || strings.Contains( err.Error() , "The process cannot access the file because it is being used by another process."){
+			log.Debug("watch try again start \n")
+			time.Sleep(time.Duration(3)*time.Second)
+			f, err = os.Open(path)
+			if err != nil {
+				log.Errorf("Fail to open file[ %s ]\n", err)
+			}
+			log.Debugf("watch try again finish[ %v ]  \n",f)
+		}
 	}
+
 	defer f.Close()
 
 	fi, err := f.Stat()
