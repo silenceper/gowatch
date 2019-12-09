@@ -55,7 +55,7 @@ func NewWatcher(paths []string, files []string) {
 				if isbuild {
 					go func() {
 						// Wait 1s before autobuild util there is no file change.
-						scheduleTime = time.Now().Add(4 * time.Second)
+						scheduleTime = time.Now().Add(1 * time.Second)
 						for {
 							time.Sleep(scheduleTime.Sub(time.Now()))
 							log.Errorf("%v", time.Now().After(scheduleTime))
