@@ -16,7 +16,7 @@ go get github.com/silenceper/gowatch
 
 Then you can add `gowatch` binary to PATH environment variable in your ~/.bashrc or ~/.bash_profile file:
 
->If you already have `gowatch` installed, updating bee is simple:
+>If you already have `gowatch` installed, updating `gowatch` is simple:
 
 ```
 go get -u github.com/silenceper/gowatch
