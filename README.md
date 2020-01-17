@@ -2,77 +2,96 @@
 [![Build Status](https://travis-ci.org/silenceper/gowatch.svg?branch=master)](https://travis-ci.org/silenceper/gowatch)
 [![Go Report Card](https://goreportcard.com/badge/github.com/silenceper/gowatch)](https://goreportcard.com/report/github.com/silenceper/gowatch)
 
+[中文文档](./README_ZH_CN.md)
 
-Go 程序热编译工具，提升开发效率
-
-通过监听当前目录下的相关文件变动，进行实时编译
+gowatch is a command line tool that builds and (re)starts your go project everytime you save a Go or template file.
 
 
-### 安装使用
+## Installation
+To install `gowatch` use the `go get` command:
 
 ```go
 go get github.com/silenceper/gowatch
 ```
 
-安装完成之后，即可使用`gowatch`命令，在当前文件执行:
+Then you can add `gowatch` binary to PATH environment variable in your ~/.bashrc or ~/.bash_profile file:
+
+>If you already have `gowatch` installed, updating bee is simple:
+
+```
+go get -u github.com/silenceper/gowatch
+```
+## Usage
+```
+cd /path/to/myapp
+```
+Start gowatch:
+
+```
+gowatch
+```
 
 ![gowatch](./screenshot/gowatch.png)
 
+Gowatch will watch for file events, and every time you create/modify/delete a file it will build and restart the application,If `go build` returns an error, it will log it in stdout.
 
-### 命令行参数
+### Support Options
 
-- -o : 非必须，指定build的目标文件路径
-- -p : 非必须，指定需要build的package（也可以是单个文件）
-- -args: 非必须，指定程序运行时参数，例如：-args='-host=:8080,-name=demo'
-- -v: 非必须，显示gowatch版本信息
+- -o : Not required, specify the target file path for the build
+- -p : Not required, specify the package to be built (can also be a single file)
+- -args: Not required, specify program runtime parameters, for example: -args = '-host =: 8080, -name = demo'
+- -v: Not required, display gowatch version information
 
-例子:
+example:
 
 `gowatch -o ./bin/demo -p ./cmd/demo`
 
-### 配置文件
-`gowatch.yml`
+### Configuration file
 
-大部分情况下，不需要更改配置，直接执行`gowatch`命令就能满足的大部分的需要，但是也提供了一些配置用于自定义，在执行目录下创建`gowatch.yml`文件:
+In most cases, you don't need to specify the configuration. You can meet most of the requirements by directly executing the `gowatch` command.
+Create a `gowatch.yml` file in the execution directory:
 
 ```
-# gowatch.yml 配置示例
+# gowatch.yml configuration example
 
-# 当前目录执行下生成的可执行文件的名字，默认是当前目录名
+# The name of the executable file generated under the current directory execution. The default is the current directory name.
 appname: "test"
-# 指定编译后的目标文件目录
+# Specify the directory where the compiled object files are stored
 output: /bin/demo
-# 需要追加监听的文件名后缀，默认只有'.go'文件
+# The file name suffix that needs to be monitored. By default, there is only a '.go' file.
 watch_exts:
     - .yml
-# 需要监听的目录，默认只有当前目录
+# The directory that needs to listen for file changes. By default, only the current directory.
 watch_paths:
     - ../pk
-# 在执行命令时，需要增加的其他参数
+# Additional parameters that need to be added when running the application
 cmd_args:
     - arg1=val1
-# 在构建命令时，需要增加的其他参数
+# Additional parameters that need to be added when building the application
 build_args:
     - -race
-# 需要增加环境变量，默认已加载当前环境变量
+# Need to increase environment variables, the current environment variables are loaded by default
 envs:
     - a=b
-# 是否监听 ‘vendor’ 文件夹下的文件改变
+# Whether to listen to file changes in the 'vendor' folder
 vendor_watch: false
-# 不需要监听的目录名字
+# Directory that do not need to listen for file changes
 excluded_paths:
     - path
-# main 包路径，也可以是单个文件，多个文件使用逗号分隔
+# main package path, can also be a single file, multiple files separated by commas
 build_pkg: ""
 # build tags
 build_tags: ""
 
-# 是否禁止自动运行
+# Whether to prohibit automatic operation
 disable_run: false
 
 ```
 
-## 交流群：
+## Author
+[@silenceper](http://silenceper.com)
+
+## 微信公众号
 ![关注公众号入群交流](https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/qr_code_study_program_258.jpg)
 >关注公众号并回复“入群”
 
