@@ -91,9 +91,5 @@ disable_run: false
 ## Author
 [@silenceper](http://silenceper.com)
 
-## 微信公众号
-![关注公众号入群交流](https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/qr_code_study_program_258.jpg)
->关注公众号并回复“入群”
-
 
 >Inspired by [bee](https://github.com/beego/bee)
