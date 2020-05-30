@@ -1,6 +1,5 @@
 # gowatch
 ![Go](https://github.com/silenceper/gowatch/workflows/Go/badge.svg)
-[![Build Status](https://travis-ci.org/silenceper/gowatch.svg?branch=master)](https://travis-ci.org/silenceper/gowatch)
 [![Go Report Card](https://goreportcard.com/badge/github.com/silenceper/gowatch)](https://goreportcard.com/report/github.com/silenceper/gowatch)
 
 [中文文档](./README_ZH_CN.md)
