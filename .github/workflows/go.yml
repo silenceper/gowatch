@@ -31,8 +31,5 @@ jobs:
           go vet ./...
           golint -set_exit_status $(go list ./...)
 
-      - name: Run golangci-lint
-        uses: golangci/golangci-lint-action@v1.2.1
-
       - name: Build
         run: go build -v .
