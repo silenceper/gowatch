@@ -1,5 +1,5 @@
 # gowatch
-[![Build Status](https://travis-ci.org/silenceper/gowatch.svg?branch=master)](https://travis-ci.org/silenceper/gowatch)
+![Go](https://github.com/silenceper/gowatch/workflows/Go/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/silenceper/gowatch)](https://goreportcard.com/report/github.com/silenceper/gowatch)
 
 
