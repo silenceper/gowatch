@@ -57,11 +57,10 @@ func NewWatcher(paths []string, files []string) {
 						// Wait 1s before autobuild util there is no file change.
 						scheduleTime = time.Now().Add(1 * time.Second)
 						for {
-							time.Sleep(scheduleTime.Sub(time.Now()))
+							time.Sleep(time.Until(scheduleTime))
 							if time.Now().After(scheduleTime) {
 								break
 							}
-							return
 						}
 
 						Autobuild(files)
@@ -83,7 +82,6 @@ func NewWatcher(paths []string, files []string) {
 			os.Exit(2)
 		}
 	}
-
 }
 
 // getFileModTime retuens unix timestamp of `os.File.ModTime` by given path.
@@ -172,7 +170,7 @@ func Restart(appname string) {
 //Start start app
 func Start(appname string) {
 	log.Infof("Restarting %s ...\n", appname)
-	if strings.Index(appname, "./") == -1 {
+	if !strings.HasPrefix(appname, "./") {
 		appname = "./" + appname
 	}
 
@@ -182,7 +180,9 @@ func Start(appname string) {
 	cmd.Args = append([]string{appname}, cfg.CmdArgs...)
 	cmd.Env = append(os.Environ(), cfg.Envs...)
 	log.Infof("Run %s", strings.Join(cmd.Args, " "))
-	go cmd.Run()
+	go func() {
+		_ = cmd.Run()
+	}()
 
 	log.Infof("%s is running...\n", appname)
 	started <- true
@@ -237,17 +237,16 @@ func readAppDirectories(directory string, paths *[]string) {
 			continue
 		}
 
-		if fileInfo.IsDir() == true && fileInfo.Name()[0] != '.' {
+		if fileInfo.IsDir() && fileInfo.Name()[0] != '.' {
 			readAppDirectories(directory+"/"+fileInfo.Name(), paths)
 			continue
 		}
-		if useDirectory == true {
+		if useDirectory {
 			continue
 		}
 		*paths = append(*paths, directory)
 		useDirectory = true
 	}
-	return
 }
 
 // If a file is excluded
