@@ -93,10 +93,6 @@ func runApp() {
 	}
 	NewWatcher(paths, files)
 	Autobuild(files)
-	for {
-		select {
-		case <-exit:
-			runtime.Goexit()
-		}
-	}
+	<-exit
+	runtime.Goexit()
 }
