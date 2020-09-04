@@ -20,7 +20,7 @@ type config struct {
 	//需要追加监听的目录，默认是当前文件夹，
 	WatchPaths []string `yaml:"watch_paths"`
 	//运行前额外执行的命令
-	ExternalCmd []string `yaml:"external_cmd"`
+	ExternalCmds []string `yaml:"external_cmds"`
 	//执行时的额外参数
 	CmdArgs []string `yaml:"cmd_args"`
 	//构建时的额外参数

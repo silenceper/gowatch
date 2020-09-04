@@ -174,7 +174,7 @@ func Start(appname string) {
 		appname = "./" + appname
 	}
 
-	for _, externalCmd := range cfg.ExternalCmd {
+	for _, externalCmd := range cfg.ExternalCmds {
 		log.Infof("Run external cmd '%s'", externalCmd)
 		cmdArr := strings.Split(externalCmd, " ")
 		externalCmdExec := exec.Command(cmdArr[0])
