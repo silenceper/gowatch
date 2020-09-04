@@ -83,6 +83,10 @@ build_pkg: ""
 # build tags
 build_tags: ""
 
+# Commands that can be executed before running the app
+#external_cmd:
+#  - swag init
+
 # Whether to prohibit automatic operation
 disable_run: false
 
