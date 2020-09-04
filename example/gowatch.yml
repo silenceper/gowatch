@@ -25,4 +25,7 @@ output: ./example
 
 #build_tags: ""
 
+#external_cmd:
+#  - go version
+
 disable_run: false
