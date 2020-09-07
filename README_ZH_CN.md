@@ -67,6 +67,10 @@ build_pkg: ""
 # build tags
 build_tags: ""
 
+#在build app执行的命令 ，例如 swag init	
+#prev_build_cmds:	
+#  - swag init
+
 # 是否禁止自动运行
 disable_run: false
 
