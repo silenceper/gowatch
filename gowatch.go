@@ -115,6 +115,20 @@ func Autobuild(files []string) {
 		return
 	}
 
+	for _, prevCmd := range cfg.PrevBuildCmds {
+		log.Infof("Run external cmd '%s'", prevCmd)
+		cmdArr := strings.Split(prevCmd, " ")
+		prevCmdExec := exec.Command(cmdArr[0])
+		prevCmdExec.Env = append(os.Environ(), cfg.Envs...)
+		prevCmdExec.Args = cmdArr
+		prevCmdExec.Stdout = os.Stdout
+		prevCmdExec.Stderr = os.Stderr
+		err := prevCmdExec.Run()
+		if err != nil {
+			panic(err)
+		}
+	}
+
 	cmdName := "go"
 
 	var err error
@@ -174,19 +188,6 @@ func Start(appname string) {
 		appname = "./" + appname
 	}
 
-	for _, externalCmd := range cfg.ExternalCmds {
-		log.Infof("Run external cmd '%s'", externalCmd)
-		cmdArr := strings.Split(externalCmd, " ")
-		externalCmdExec := exec.Command(cmdArr[0])
-		externalCmdExec.Env = append(os.Environ(), cfg.Envs...)
-		externalCmdExec.Args = cmdArr
-		externalCmdExec.Stdout = os.Stdout
-		externalCmdExec.Stderr = os.Stderr
-		err := externalCmdExec.Run()
-		if err != nil {
-			panic(err)
-		}
-	}
 	cmd = exec.Command(appname, cfg.CmdArgs...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
