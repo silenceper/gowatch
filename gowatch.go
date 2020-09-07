@@ -174,24 +174,12 @@ func Start(appname string) {
 		appname = "./" + appname
 	}
 
-	for _, externalCmd := range cfg.ExternalCmds {
-		log.Infof("Run external cmd '%s'", externalCmd)
-		cmdArr := strings.Split(externalCmd, " ")
-		externalCmdExec := exec.Command(cmdArr[0])
-		externalCmdExec.Env = append(os.Environ(), cfg.Envs...)
-		externalCmdExec.Args = cmdArr
-		externalCmdExec.Stdout = os.Stdout
-		externalCmdExec.Stderr = os.Stderr
-		err := externalCmdExec.Run()
-		if err != nil {
-			panic(err)
-		}
-	}
-	cmd = exec.Command(appname, cfg.CmdArgs...)
+	cmd = exec.Command(appname)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
+	cmd.Args = append([]string{appname}, cfg.CmdArgs...)
 	cmd.Env = append(os.Environ(), cfg.Envs...)
-	log.Infof("Run '%s'", strings.Join(cmd.Args, " "))
+	log.Infof("Run %s", strings.Join(cmd.Args, " "))
 	go func() {
 		_ = cmd.Run()
 	}()

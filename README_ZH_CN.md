@@ -70,9 +70,6 @@ build_tags: ""
 # 是否禁止自动运行
 disable_run: false
 
-#在执行app执行的命令 ，例如 swag init
-#external_cmd:
-#  - swag init
 ```
 
 ## 微信公众号
