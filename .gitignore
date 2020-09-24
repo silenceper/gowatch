@@ -27,3 +27,4 @@ vendor/*/
 gowatch
 /bin
 .idea/
+/dist/
