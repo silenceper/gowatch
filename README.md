@@ -1,6 +1,8 @@
 # gowatch
 ![Go](https://github.com/silenceper/gowatch/workflows/Go/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/silenceper/gowatch)](https://goreportcard.com/report/github.com/silenceper/gowatch)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/silenceper/gowatch)](https://pkg.go.dev/github.com/silenceper/gowatch)
+[![codecov](https://codecov.io/gh/silenceper/gowatch/branch/master/graph/badge.svg)](https://codecov.io/gh/silenceper/gowatch)
 
 [中文文档](./README_ZH_CN.md)
 
@@ -83,8 +85,8 @@ build_pkg: ""
 # build tags
 build_tags: ""
 
-# Commands that can be executed before build the app	
-#prev_build_cmds:	
+# Commands that can be executed before build the app
+#prev_build_cmds:
 #  - swag init
 
 # Whether to prohibit automatic operation
