@@ -21,5 +21,10 @@ jobs:
       with:
         # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
         version: v1.26
+    - name: Upload Coverage report to CodeCov
+      uses: codecov/codecov-action@v1.0.0
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: ./coverage.txt
     - name: Build
       run: go build -v .
