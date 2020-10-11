@@ -11,31 +11,31 @@ import (
 var configFile = "./gowatch.yml"
 
 type config struct {
-	//执行的app名字，默认当前目录文字
+	// The name of the running app, the default current directory name
 	AppName string `yaml:"appname"`
-	//指定ouput执行的程序路径
+	// Specify the program path for output execution
 	Output string `yaml:"output"`
-	//需要追加监听的文件后缀名字，默认是'.go'，
+	// Need to add watch file suffix name, the default is'.go',
 	WatchExts []string `yaml:"watch_exts"`
-	//需要追加监听的目录，默认是当前文件夹，
+	// Need to add watch directory, the default is the current folder
 	WatchPaths []string `yaml:"watch_paths"`
-	//build前额外执行的命令
+	// Additional commands executed before the build command
 	PrevBuildCmds []string `yaml:"prev_build_cmds"`
-	//执行时的额外参数
+	// Extra parameters when running the application
 	CmdArgs []string `yaml:"cmd_args"`
-	//构建时的额外参数
+	// Additional parameters during build
 	BuildArgs []string `yaml:"build_args"`
-	//执行时追加的环境变量
+	// Environment variables added when running the application
 	Envs []string `yaml:"envs"`
-	//vendor 目录下的文件是否也监听
+	// Specify whether the files in the vendor directory are also watched
 	VendorWatch bool `yaml:"vendor_watch"`
-	//不需要监听的目录
+	// Specify a directory that does not require watch
 	ExcludedPaths []string `yaml:"excluded_paths"`
-	//需要编译的包或文件,优先使用-p参数
+	// For packages or files that need to be compiled, use the -p parameter first
 	BuildPkg string `yaml:"build_pkg"`
-	//在go build 时期接收的-tags参数
+	// -tags parameter accepted during go build
 	BuildTags string `yaml:"build_tags"`
-	//程序是否自动运行
+	// Specify whether the program runs automatically
 	DisableRun bool `yaml:"disable_run"`
 }
 

@@ -22,7 +22,7 @@ var (
 	scheduleTime time.Time
 )
 
-//NewWatcher new watcher
+// NewWatcher new watcher
 func NewWatcher(paths []string, files []string) {
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
@@ -46,7 +46,7 @@ func NewWatcher(paths []string, files []string) {
 
 				mt := getFileModTime(e.Name)
 				if t := eventTime[e.Name]; mt == t {
-					//log.Infof("[SKIP] # %s #\n", e.String())
+					// log.Infof("[SKIP] # %s #\n", e.String())
 					isbuild = false
 				}
 
@@ -86,7 +86,7 @@ func NewWatcher(paths []string, files []string) {
 
 // getFileModTime retuens unix timestamp of `os.File.ModTime` by given path.
 func getFileModTime(path string) int64 {
-	path = strings.Replace(path, "\\", "/", -1)
+	path = strings.ReplaceAll(path, "\\", "/")
 	f, err := os.Open(path)
 	if err != nil {
 		log.Errorf("Fail to open file[ %s ]\n", err)
@@ -103,7 +103,7 @@ func getFileModTime(path string) int64 {
 	return fi.ModTime().Unix()
 }
 
-//Autobuild auto build
+// Autobuild auto build
 func Autobuild(files []string) {
 	state.Lock()
 	defer state.Unlock()
@@ -159,7 +159,7 @@ func Autobuild(files []string) {
 	}
 }
 
-//Kill kill process
+// Kill kill process
 func Kill() {
 	defer func() {
 		if e := recover(); e != nil {
@@ -174,14 +174,14 @@ func Kill() {
 	}
 }
 
-//Restart restart app
+// Restart restart app
 func Restart(appname string) {
-	//log.Debugf("kill running process")
+	// log.Debugf("kill running process")
 	Kill()
 	go Start(appname)
 }
 
-//Start start app
+// Start start app
 func Start(appname string) {
 	log.Infof("Restarting %s ...\n", appname)
 	if !strings.HasPrefix(appname, "./") {
