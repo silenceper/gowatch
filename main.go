@@ -45,7 +45,7 @@ func main() {
 	cfg = parseConfig()
 	currpath, _ = os.Getwd()
 	if cfg.AppName == "" {
-		//app名默认取目录名
+		// The app name defaults to the directory name
 		if output == "" {
 			cfg.AppName = path.Base(currpath)
 		} else {
@@ -57,7 +57,7 @@ func main() {
 		cfg.Output = output
 	}
 
-	//如果未指定output则为"./appname"
+	// If output is not specified, it is "./appname"
 	if cfg.Output == "" {
 		outputExt := ""
 		if runtime.GOOS == "windows" {
@@ -70,7 +70,7 @@ func main() {
 		cfg.CmdArgs = strings.Split(cmdArgs, ",")
 	}
 
-	//监听的文件后缀
+	// File suffix to be watched
 	cfg.WatchExts = append(cfg.WatchExts, ".go")
 
 	runApp()
@@ -79,7 +79,7 @@ func main() {
 func runApp() {
 	var paths []string
 	readAppDirectories(currpath, &paths)
-	//除了当前目录，增加额外监听的目录
+	// In addition to the current directory, add additional watch directories
 	for _, path := range cfg.WatchPaths {
 		readAppDirectories(path, &paths)
 	}

@@ -8,6 +8,7 @@
 
 gowatch is a command line tool that builds and (re)starts your go project everytime you save a Go or template file.
 
+![gowatch](./screenshot/gowatch.png)
 
 ## Installation
 To install `gowatch` use the `go get` command:
@@ -33,7 +34,6 @@ Start gowatch:
 gowatch
 ```
 
-![gowatch](./screenshot/gowatch.png)
 
 Gowatch will watch for file events, and every time you create/modify/delete a file it will build and restart the application,If `go build` returns an error, it will log it in stdout.
 
