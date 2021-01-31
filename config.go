@@ -37,6 +37,8 @@ type config struct {
 	BuildTags string `yaml:"build_tags"`
 	// Specify whether the program runs automatically
 	DisableRun bool `yaml:"disable_run"`
+	// commands when build finished to run
+	RunCmd string `yaml:"run_cmd"`
 }
 
 func parseConfig() *config {
