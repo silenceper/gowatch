@@ -13,7 +13,7 @@ import (
 	"time"
 
 	"github.com/howeyc/fsnotify"
-	"github.com/sbinet/pstree"
+	"github.com/mitchellh/go-ps"
 	"github.com/silenceper/log"
 )
 
@@ -185,7 +185,7 @@ func Kill() {
 func killAllProcesses(pid int) (err error) {
 	hasAllKilled := make(chan bool)
 	go func() {
-		pids, err := getAllProcesses(pid)
+		pids, err := psTree(pid)
 		if err != nil {
 			log.Fatalf("getting all sub processes error: %v\n", err)
 			return
@@ -232,28 +232,42 @@ func killProcess(pid int) (err error) {
 	return
 }
 
-func getAllProcesses(pid int) (pids []int, err error) {
-	tree, err := pstree.New()
+// implement pstree based on the cross-platform ps utility in go, go-ps
+func psTree(rootPid int) (res []int, err error) {
+	pidOfInterest := map[int]struct{}{rootPid: {}}
+	pss, err := ps.Processes()
 	if err != nil {
-		log.Fatalf("error: %v\n", err)
+		fmt.Println("ERROR: ", err)
 		return
 	}
 
-	traverseChildren(pid, tree, &pids)
-	// we must kill the sub processes from smallest to largest
-	sort.Ints(pids)
+	// we must sort the ps by ppid && pid first, otherwise we probably will miss some sub-processes
+	// of the root process during for-range searching
+	sort.Slice(pss, func(i, j int) bool {
+		ppidLess := pss[i].PPid() < pss[j].PPid()
+		pidLess := pss[i].PPid() == pss[j].PPid() && pss[i].Pid() < pss[j].Pid()
+
+		return ppidLess || pidLess
+	})
+
+	for _, ps := range pss {
+		ppid := ps.PPid()
+		if _, exists := pidOfInterest[ppid]; exists {
+			pidOfInterest[ps.Pid()] = struct{}{}
+		}
+	}
+
+	for pid, _ := range pidOfInterest {
+		if pid != rootPid {
+			res = append(res, pid)
+		}
+	}
+
 	return
 }
 
-func traverseChildren(pid int, tree *pstree.Tree, curPids *[]int) {
-	for _, cid := range tree.Procs[pid].Children {
-		*curPids = append(*curPids, cid)
-		traverseChildren(cid, tree, curPids)
-	}
-}
-
 func waitForProcess(pid int, hasAllKilled chan bool) (err error) {
-	pids, _ := getAllProcesses(pid)
+	pids, _ := psTree(pid)
 	if len(pids) == 0 {
 		hasAllKilled <- true
 		return

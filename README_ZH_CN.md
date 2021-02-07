@@ -41,7 +41,7 @@ go get github.com/silenceper/gowatch
 # 当前目录执行下生成的可执行文件的名字，默认是当前目录名
 appname: "test"
 
-# 指定编译完成后执行的命令，可指定自定义脚本（目前只支持 linux 系统）
+# 指定编译完成后执行的命令，可指定自定义脚本
 run_cmd: "./run.sh"
 
 # 指定编译后的目标文件目录

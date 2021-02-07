@@ -59,7 +59,7 @@ Create a `gowatch.yml` file in the execution directory:
 # The name of the executable file generated under the current directory execution. The default is the current directory name.
 appname: "test"
 
-# Specify the command to run after builds done (only support linux platform currently)
+# Specify the command to run after builds done
 run_cmd: "./run.sh"
 
 # Specify the directory where the compiled object files are stored
