@@ -165,7 +165,7 @@ func Autobuild(files []string) {
 	}
 }
 
-// Kill
+// Kill kill main process and all its children
 func Kill() {
 	defer func() {
 		if e := recover(); e != nil {
@@ -194,7 +194,7 @@ func killAllProcesses(pid int) (err error) {
 		log.Debugf("pids: %+v", pids)
 
 		for _, subPid := range pids {
-			killProcess(subPid)
+			_ = killProcess(subPid)
 		}
 
 		waitForProcess(pid, hasAllKilled)
@@ -225,7 +225,7 @@ func killProcess(pid int) (err error) {
 		// retry
 		time.AfterFunc(2*time.Second, func() {
 			log.Debugf("retry killing process pid: %d", pid)
-			killProcess(pid)
+			_ = killProcess(pid)
 		})
 		return
 	}
@@ -257,7 +257,7 @@ func psTree(rootPid int) (res []int, err error) {
 		}
 	}
 
-	for pid, _ := range pidOfInterest {
+	for pid := range pidOfInterest {
 		if pid != rootPid {
 			res = append(res, pid)
 		}
@@ -266,7 +266,7 @@ func psTree(rootPid int) (res []int, err error) {
 	return
 }
 
-func waitForProcess(pid int, hasAllKilled chan bool) (err error) {
+func waitForProcess(pid int, hasAllKilled chan bool) {
 	pids, _ := psTree(pid)
 	if len(pids) == 0 {
 		hasAllKilled <- true
@@ -277,7 +277,6 @@ func waitForProcess(pid int, hasAllKilled chan bool) (err error) {
 	time.AfterFunc(time.Second, func() {
 		waitForProcess(pid, hasAllKilled)
 	})
-	return
 }
 
 // Restart restart app
