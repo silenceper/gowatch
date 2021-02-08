@@ -40,30 +40,43 @@ go get github.com/silenceper/gowatch
 
 # 当前目录执行下生成的可执行文件的名字，默认是当前目录名
 appname: "test"
+
+# 指定编译完成后执行的命令，可指定自定义脚本
+run_cmd: "./run.sh"
+
 # 指定编译后的目标文件目录
 output: /bin/demo
+
 # 需要追加监听的文件名后缀，默认只有'.go'文件
 watch_exts:
     - .yml
+
 # 需要监听的目录，默认只有当前目录
 watch_paths:
     - ../pk
+
 # 在执行命令时，需要增加的其他参数
 cmd_args:
     - arg1=val1
+
 # 在构建命令时，需要增加的其他参数
 build_args:
     - -race
+
 # 需要增加环境变量，默认已加载当前环境变量
 envs:
     - a=b
+
 # 是否监听 ‘vendor’ 文件夹下的文件改变
 vendor_watch: false
+
 # 不需要监听的目录名字
 excluded_paths:
     - path
+
 # main 包路径，也可以是单个文件，多个文件使用逗号分隔
 build_pkg: ""
+
 # build tags
 build_tags: ""
 

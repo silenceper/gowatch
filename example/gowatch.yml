@@ -3,6 +3,9 @@
 # 程序名称
 appname: "example"
 
+# running command after builds done
+# run_cmd: "./dev-run.sh"
+
 # Output
 output: ./example
 

@@ -7,11 +7,13 @@ import (
 	"os/exec"
 	path "path/filepath"
 	"regexp"
+	"sort"
 	"strings"
 	"sync"
 	"time"
 
 	"github.com/howeyc/fsnotify"
+	"github.com/mitchellh/go-ps"
 	"github.com/silenceper/log"
 )
 
@@ -155,11 +157,15 @@ func Autobuild(files []string) {
 	}
 	log.Infof("Build was successful\n")
 	if !cfg.DisableRun {
-		Restart(cfg.Output)
+		if len(cfg.RunCmd) != 0 {
+			Restart(cfg.RunCmd, true)
+		} else {
+			Restart(cfg.Output, false)
+		}
 	}
 }
 
-// Kill kill process
+// Kill
 func Kill() {
 	defer func() {
 		if e := recover(); e != nil {
@@ -167,24 +173,124 @@ func Kill() {
 		}
 	}()
 	if cmd != nil && cmd.Process != nil {
-		err := cmd.Process.Kill()
+		// err := cmd.Process.Kill()
+		err := killAllProcesses(cmd.Process.Pid)
 		if err != nil {
 			fmt.Println("Kill -> ", err)
 		}
 	}
 }
 
+// kill main process and all its children
+func killAllProcesses(pid int) (err error) {
+	hasAllKilled := make(chan bool)
+	go func() {
+		pids, err := psTree(pid)
+		if err != nil {
+			log.Fatalf("getting all sub processes error: %v\n", err)
+			return
+		}
+		log.Debugf("main pid: %d", pid)
+		log.Debugf("pids: %+v", pids)
+
+		for _, subPid := range pids {
+			killProcess(subPid)
+		}
+
+		waitForProcess(pid, hasAllKilled)
+	}()
+
+	// finally kill the main process
+	<-hasAllKilled
+	log.Debugf("killing MAIN process pid: %d", pid)
+	err = cmd.Process.Kill()
+	if err != nil {
+		return
+	}
+	log.Debugf("kill MAIN process succeed")
+
+	return
+}
+
+func killProcess(pid int) (err error) {
+	log.Debugf("killing process pid: %d", pid)
+	ps, err := os.FindProcess(pid)
+	if err != nil {
+		log.Errorf("find process %d error: %v\n", pid, err)
+		return
+	}
+	err = ps.Kill()
+	if err != nil {
+		log.Errorf("killing process %d error: %v\n", pid, err)
+		// retry
+		time.AfterFunc(2*time.Second, func() {
+			log.Debugf("retry killing process pid: %d", pid)
+			killProcess(pid)
+		})
+		return
+	}
+	return
+}
+
+// implement pstree based on the cross-platform ps utility in go, go-ps
+func psTree(rootPid int) (res []int, err error) {
+	pidOfInterest := map[int]struct{}{rootPid: {}}
+	pss, err := ps.Processes()
+	if err != nil {
+		fmt.Println("ERROR: ", err)
+		return
+	}
+
+	// we must sort the ps by ppid && pid first, otherwise we probably will miss some sub-processes
+	// of the root process during for-range searching
+	sort.Slice(pss, func(i, j int) bool {
+		ppidLess := pss[i].PPid() < pss[j].PPid()
+		pidLess := pss[i].PPid() == pss[j].PPid() && pss[i].Pid() < pss[j].Pid()
+
+		return ppidLess || pidLess
+	})
+
+	for _, ps := range pss {
+		ppid := ps.PPid()
+		if _, exists := pidOfInterest[ppid]; exists {
+			pidOfInterest[ps.Pid()] = struct{}{}
+		}
+	}
+
+	for pid, _ := range pidOfInterest {
+		if pid != rootPid {
+			res = append(res, pid)
+		}
+	}
+
+	return
+}
+
+func waitForProcess(pid int, hasAllKilled chan bool) (err error) {
+	pids, _ := psTree(pid)
+	if len(pids) == 0 {
+		hasAllKilled <- true
+		return
+	}
+
+	log.Infof("still waiting for %d processes %+v to exit", len(pids), pids)
+	time.AfterFunc(time.Second, func() {
+		waitForProcess(pid, hasAllKilled)
+	})
+	return
+}
+
 // Restart restart app
-func Restart(appname string) {
+func Restart(appname string, isCmd bool) {
 	// log.Debugf("kill running process")
 	Kill()
-	go Start(appname)
+	go Start(appname, isCmd)
 }
 
 // Start start app
-func Start(appname string) {
+func Start(appname string, isCmd bool) {
 	log.Infof("Restarting %s ...\n", appname)
-	if !strings.HasPrefix(appname, "./") {
+	if !strings.HasPrefix(appname, "./") && !isCmd {
 		appname = "./" + appname
 	}
 
