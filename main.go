@@ -28,10 +28,10 @@ func init() {
 }
 
 var ignoredFilesRegExps = []string{
-	`.#(\w+).go`,
-	`.(\w+).go.swp`,
-	`(\w+).go~`,
-	`(\w+).tmp`,
+	`.#(\w+).go$`,
+	`.(\w+).go.swp$`,
+	`(\w+).go~$`,
+	`(\w+).tmp$`,
 }
 
 func main() {
