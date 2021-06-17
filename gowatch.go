@@ -105,8 +105,18 @@ func getFileModTime(path string) int64 {
 	return fi.ModTime().Unix()
 }
 
+var building bool
+
 // Autobuild auto build
 func Autobuild(files []string) {
+	if building {
+		log.Infof("still in building...\n")
+		return
+	}
+	building = true
+	defer func() {
+		building = false
+	}()
 	state.Lock()
 	defer state.Unlock()
 
