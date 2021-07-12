@@ -9,7 +9,6 @@ import (
 	"regexp"
 	"sort"
 	"strings"
-	"sync"
 	"time"
 
 	"github.com/howeyc/fsnotify"
@@ -19,7 +18,6 @@ import (
 
 var (
 	cmd          *exec.Cmd
-	state        sync.Mutex
 	eventTime    = make(map[string]int64)
 	scheduleTime time.Time
 )
@@ -105,10 +103,19 @@ func getFileModTime(path string) int64 {
 	return fi.ModTime().Unix()
 }
 
+var building bool
+
 // Autobuild auto build
+// nolint:funlen
 func Autobuild(files []string) {
-	state.Lock()
-	defer state.Unlock()
+	if building {
+		log.Infof("still in building...\n")
+		return
+	}
+	building = true
+	defer func() {
+		building = false
+	}()
 
 	log.Infof("Start building...\n")
 

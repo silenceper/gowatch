@@ -43,6 +43,7 @@ Gowatch will watch for file events, and every time you create/modify/delete a fi
 - -p : Not required, specify the package to be built (can also be a single file)
 - -args: Not required, specify program runtime parameters, for example: -args = '-host =: 8080, -name = demo'
 - -v: Not required, display gowatch version information
+- -h: Not required, show usage
 
 example:
 
@@ -51,8 +52,12 @@ example:
 ### Configuration file
 
 In most cases, you don't need to specify the configuration. You can meet most of the requirements by directly executing the `gowatch` command.
-Create a `gowatch.yml` file in the execution directory:
 
+You can initialize the gowatch.yml configuration file to the current directory with the default settings running the following command.
+```
+gowatch init
+```
+Create a `gowatch.yml` file in the execution directory:
 ```
 # gowatch.yml configuration example
 

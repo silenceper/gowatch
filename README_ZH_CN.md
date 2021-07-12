@@ -25,6 +25,7 @@ go get github.com/silenceper/gowatch
 - -p : 非必须，指定需要build的package（也可以是单个文件）
 - -args: 非必须，指定程序运行时参数，例如：-args='-host=:8080,-name=demo'
 - -v: 非必须，显示gowatch版本信息
+- -h: 非必须，帮助信息
 
 例子:
 
@@ -33,8 +34,13 @@ go get github.com/silenceper/gowatch
 ### 配置文件
 `gowatch.yml`
 
-大部分情况下，不需要更改配置，直接执行`gowatch`命令就能满足的大部分的需要，但是也提供了一些配置用于自定义，在执行目录下创建`gowatch.yml`文件:
+大部分情况下，不需要更改配置，直接执行`gowatch`命令就能满足的大部分的需要，但是也提供了一些配置用于自定义
 
+可以通过以下命令生成默认配置
+```
+gowatch init
+```
+会在执行目录下创建`gowatch.yml`文件
 ```
 # gowatch.yml 配置示例
 
