@@ -42,39 +42,40 @@ var defaultYml = `
 # gowatch.yml configuration example
 
 # The name of the executable file generated under the current directory execution. The default is the current directory name.
-appname: "test"
+# appname: "app"
 
 # Specify the command to run after builds done
-run_cmd: "./run.sh"
-
+# run_cmd: "./run.sh"
+ 
 # Specify the directory where the compiled object files are stored
-output: /bin/demo
+# output: /bin/app
+
 # The file name suffix that needs to be monitored. By default, there is only a '.go' file.
-watch_exts:
-    - .yml
+# watch_exts:
+#   - .yml
 
 # The directory that needs to listen for file changes. By default, only the current directory.
-watch_paths:
-    - ../pk
+# watch_paths:
+#   - ../pk
 
 # Additional parameters that need to be added when running the application
-cmd_args:
-    - arg1=val1
+# cmd_args:
+#   - arg1=val1
 
 # Additional parameters that need to be added when building the application
-build_args:
-    - -race
+# build_args:
+#   - -race
 
 # Need to increase environment variables, the current environment variables are loaded by default
-envs:
-    - a=b
+# envs:
+#   - env1=val1
 
 # Whether to listen to file changes in the 'vendor' folder
 vendor_watch: false
 
 # Directory that do not need to listen for file changes
-excluded_paths:
-    - path
+# excluded_paths:
+#   - path
 
 # main package path, can also be a single file, multiple files separated by commas
 build_pkg: ""
@@ -83,8 +84,8 @@ build_pkg: ""
 build_tags: ""
 
 # Commands that can be executed before build the app
-#prev_build_cmds:
-#  - swag init
+# prev_build_cmds:
+#   - swag init
 
 # Whether to prohibit automatic operation
 disable_run: false
