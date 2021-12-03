@@ -43,6 +43,7 @@ Gowatch will watch for file events, and every time you create/modify/delete a fi
 - -p : Not required, specify the package to be built (can also be a single file)
 - -args: Not required, specify program runtime parameters, for example: -args = '-host =: 8080, -name = demo'
 - -v: Not required, display gowatch version information
+- -l: Not required, specify the log level, default is debug
 - -h: Not required, show usage
 
 example:
@@ -109,6 +110,8 @@ build_tags: ""
 # Whether to prohibit automatic operation
 disable_run: false
 
+# log level, support debug, info, warn, error, fatal
+log_level: "debug"
 ```
 
 ## Author

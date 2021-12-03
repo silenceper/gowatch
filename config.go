@@ -39,6 +39,8 @@ type config struct {
 	DisableRun bool `yaml:"disable_run"`
 	// commands when build finished to run
 	RunCmd string `yaml:"run_cmd"`
+	// log level, support: debug, info, warn, error, fatal
+	LogLevel string `yaml:"log_level"`
 }
 
 func parseConfig() *config {
