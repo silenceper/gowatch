@@ -8,6 +8,8 @@ import (
 	path "path/filepath"
 	"runtime"
 	"strings"
+
+	"github.com/silenceper/log"
 )
 
 var (
@@ -19,6 +21,7 @@ var (
 	cmdArgs     string
 	showVersion bool
 	showHelp    bool
+	logLevel    string
 
 	started chan bool
 )
@@ -28,6 +31,7 @@ func init() {
 	flag.StringVar(&buildPkg, "p", "", "go build packages")
 	flag.StringVar(&cmdArgs, "args", "", "app run args,separated by commas. like: -args='-host=:8080,-name=demo'")
 	flag.BoolVar(&showVersion, "v", false, "show version")
+	flag.StringVar(&logLevel, "l", "", "log level: debug, info, warn, error, fatal")
 	flag.BoolVar(&showHelp, "h", false, "help")
 }
 
@@ -89,6 +93,9 @@ build_tags: ""
 
 # Whether to prohibit automatic operation
 disable_run: false
+
+# log level, support debug, info, warn, error, fatal
+log_level: "debug"
 `
 
 func main() {
@@ -147,6 +154,15 @@ func main() {
 	// File suffix to be watched
 	cfg.WatchExts = append(cfg.WatchExts, ".go")
 
+	// set log level, default is debug
+	if cfg.LogLevel != "" {
+		setLogLevel(cfg.LogLevel)
+	}
+	// flags override config
+	if logLevel != "" {
+		setLogLevel(logLevel)
+	}
+
 	runApp()
 }
 
@@ -169,4 +185,21 @@ func runApp() {
 	Autobuild(files)
 	<-exit
 	runtime.Goexit()
+}
+
+func setLogLevel(level string) {
+	switch level {
+	case "debug":
+		log.SetLogLevel(log.LevelDebug)
+	case "info":
+		log.SetLogLevel(log.LevelInfo)
+	case "warn":
+		log.SetLogLevel(log.LevelWarning)
+	case "error":
+		log.SetLogLevel(log.LevelError)
+	case "fatal":
+		log.SetLogLevel(log.LevelFatal)
+	default:
+		log.SetLogLevel(log.LevelDebug)
+	}
 }
