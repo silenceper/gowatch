@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/howeyc/fsnotify"
+	"github.com/fsnotify/fsnotify"
 	"github.com/mitchellh/go-ps"
 	"github.com/silenceper/log"
 )
@@ -33,7 +33,7 @@ func NewWatcher(paths []string, files []string) {
 	go func() {
 		for {
 			select {
-			case e := <-watcher.Event:
+			case e := <-watcher.Events:
 				isbuild := true
 
 				// Skip ignored files
@@ -66,7 +66,7 @@ func NewWatcher(paths []string, files []string) {
 						Autobuild(files)
 					}()
 				}
-			case err := <-watcher.Error:
+			case err := <-watcher.Errors:
 				log.Errorf("%v", err)
 				log.Warnf(" %s\n", err.Error()) // No need to exit here
 			}
@@ -76,7 +76,7 @@ func NewWatcher(paths []string, files []string) {
 	log.Infof("Initializing watcher...\n")
 	for _, path := range paths {
 		log.Infof("Directory( %s )\n", path)
-		err = watcher.Watch(path)
+		err = watcher.Add(path)
 		if err != nil {
 			log.Errorf("Fail to watch directory[ %s ]\n", err)
 			os.Exit(2)

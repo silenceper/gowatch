@@ -3,7 +3,7 @@ module github.com/silenceper/gowatch
 go 1.14
 
 require (
-	github.com/howeyc/fsnotify v0.9.0
+	github.com/fsnotify/fsnotify v1.5.1
 	github.com/mitchellh/go-ps v1.0.0
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/silenceper/log v0.0.0-20171204144354-e5ac7fa8a76a
