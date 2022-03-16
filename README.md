@@ -11,10 +11,10 @@ gowatch is a command line tool that builds and (re)starts your go project everyt
 ![gowatch](./screenshot/gowatch.png)
 
 ## Installation
-To install `gowatch` use the `go get` command:
+To install `gowatch` use the `go insall` command:
 
 ```go
-go get github.com/silenceper/gowatch
+go install github.com/silenceper/gowatch@latest
 ```
 
 Then you can add `gowatch` binary to PATH environment variable in your ~/.bashrc or ~/.bash_profile file:

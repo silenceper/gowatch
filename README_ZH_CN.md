@@ -9,9 +9,10 @@ Go 程序热编译工具，提升开发效率
 
 
 ### 安装使用
+使用 `go insall` 命令安装 `gowatch`
 
 ```go
-go get github.com/silenceper/gowatch
+go install github.com/silenceper/gowatch@latest
 ```
 
 安装完成之后，即可使用`gowatch`命令，在当前文件执行:
