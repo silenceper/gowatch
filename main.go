@@ -4,10 +4,12 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"io/fs"
 	"os"
 	path "path/filepath"
 	"runtime"
 	"strings"
+	"errors"
 
 	"github.com/silenceper/log"
 )
@@ -103,7 +105,7 @@ func main() {
 
 	// init gowatch.yml
 	if len(os.Args) > 1 && os.Args[1] == "init" {
-		if _, err := os.Stat("gowatch.yml"); os.IsNotExist(err) {
+		if _, err := os.Stat("gowatch.yml"); errors.Is(err, fs.ErrNotExist) {
 			_ = ioutil.WriteFile("gowatch.yml", []byte(defaultYml), 0755)
 			fmt.Println("gowatch.yml file created to the current directory with the default settings")
 		} else {
