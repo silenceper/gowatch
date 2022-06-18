@@ -1,15 +1,15 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"io/fs"
+	"io/ioutil"
 	"os"
 	path "path/filepath"
 	"runtime"
 	"strings"
-	"errors"
 
 	"github.com/silenceper/log"
 )
