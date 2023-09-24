@@ -41,7 +41,9 @@ issues:
     - path: _test\.go
       linters:
         - gomnd
-
+    - linters:
+        - stylecheck
+      text: "ST1000:"
     # https://github.com/go-critic/go-critic/issues/926
     - linters:
         - gocritic
@@ -52,10 +54,3 @@ linters-settings:
     lines: 66
     statements: 40
 
-issues:
-  include:
-  - EXC0002 # disable excluding of issues about comments from golint
-  exclude-rules:
-    - linters:
-       - stylecheck
-      text: "ST1000:"
