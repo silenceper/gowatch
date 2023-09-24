@@ -106,7 +106,8 @@ func getFileModTime(path string) int64 {
 var building bool
 
 // Autobuild auto build
-// nolint:funlen
+//
+//nolint:funlen
 func Autobuild(files []string) {
 	if building {
 		log.Infof("still in building...\n")
