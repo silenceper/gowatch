@@ -152,7 +152,8 @@ func Autobuild(files []string) {
 	args = append(args, files...)
 
 	bcmd := exec.Command(cmdName, args...)
-	bcmd.Env = append(os.Environ(), "GOGC=off")
+	bcmd.Env = os.Environ()
+	//bcmd.Env = append(os.Environ(), "GOGC=off")
 	bcmd.Stdout = os.Stdout
 	bcmd.Stderr = os.Stderr
 	log.Infof("Build Args: %s %s", cmdName, strings.Join(args, " "))
