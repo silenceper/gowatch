@@ -25,6 +25,8 @@ type config struct {
 	CmdArgs []string `yaml:"cmd_args"`
 	// Additional parameters during build
 	BuildArgs []string `yaml:"build_args"`
+	// use GOGC on build
+	BuildGOGC bool `yaml:"build_go_gc"`
 	// Environment variables added when running the application
 	Envs []string `yaml:"envs"`
 	// Specify whether the files in the vendor directory are also watched
