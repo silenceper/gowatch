@@ -1,4 +1,4 @@
-module github.com/flyhope/gowatch
+module github.com/silenceper/gowatch
 
 go 1.14
 

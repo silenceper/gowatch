@@ -116,3 +116,9 @@ build_go_gc: false
 # log level, support debug, info, warn, error, fatal
 log_level: "debug"
 ```
+
+## Author
+[@silenceper](http://silenceper.com)
+
+
+>Inspired by [bee](https://github.com/beego/bee)
