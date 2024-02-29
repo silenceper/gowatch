@@ -12,7 +12,7 @@ Go 程序热编译工具，提升开发效率
 使用 `go insall` 命令安装 `gowatch`
 
 ```go
-go install github.com/silenceper/gowatch@latest
+go install github.com/flyhope/gowatch@latest
 ```
 
 安装完成之后，即可使用`gowatch`命令，在当前文件执行:
@@ -94,11 +94,11 @@ build_tags: ""
 # 是否禁止自动运行
 disable_run: false
 
+# 编译时使用GOGC，false强制不使用，true根据环境变量配置来，默认使用
+build_go_gc: false
+
+# 日志级别, 支持 debug, info, warn, error, fatal
+log_level: "debug"
+
 ```
 
-## 微信公众号
-![关注公众号入群交流](https://silenceper.oss-cn-beijing.aliyuncs.com/qrcode/qr_code_study_program_258.jpg)
->关注公众号并回复“入群”
-
-
->Inspired by [bee](https://github.com/beego/bee)
