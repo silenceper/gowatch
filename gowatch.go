@@ -12,7 +12,6 @@ import (
 	"time"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/mitchellh/go-ps"
 	"github.com/silenceper/log"
 )
 
@@ -155,6 +154,8 @@ func Autobuild(files []string) {
 	bcmd.Env = os.Environ()
 	if !cfg.BuildGOGC {
 		bcmd.Env = append(bcmd.Env, "GOGC=off")
+	} else {
+		bcmd.Env = append(bcmd.Env, "GOGC=on")
 	}
 	bcmd.Stdout = os.Stdout
 	bcmd.Stderr = os.Stderr
