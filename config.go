@@ -43,8 +43,11 @@ type config struct {
 	LogLevel string `yaml:"log_level"`
 }
 
-func parseConfig() *config {
+func parseConfig(confPath string) *config {
 	c := &config{}
+	if confPath != "" {
+		configFile = confPath
+	}
 	filename, _ := filepath.Abs(configFile)
 	if !fileExist(filename) {
 		return c
