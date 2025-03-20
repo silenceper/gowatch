@@ -1,4 +1,5 @@
 # gowatch
+
 ![Go](https://github.com/silenceper/gowatch/workflows/Go/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/silenceper/gowatch)](https://goreportcard.com/report/github.com/silenceper/gowatch)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/silenceper/gowatch)](https://pkg.go.dev/github.com/silenceper/gowatch)
@@ -6,42 +7,57 @@
 
 [中文文档](./README_ZH_CN.md)
 
-gowatch is a command line tool that builds and (re)starts your go project everytime you save a Go or template file.
+gowatch is a command line tool that builds and (re)starts your go project
+everytime you save a Go or template file.
 
 ![gowatch](./screenshot/gowatch.png)
 
 ## Installation
-To install `gowatch` use the `go insall` command:
+
+> If you already have `gowatch` installed, updating `gowatch` is simple:
+
+```
+go get -u github.com/silenceper/gowatch
+```
+
+To install: `gowatch`
+
+1. Use the `go insall` command:
 
 ```go
 go install github.com/silenceper/gowatch@latest
 ```
 
-Then you can add `gowatch` binary to PATH environment variable in your ~/.bashrc or ~/.bash_profile file:
+2. Add `gowatch` binary to PATH environment variable in your ~/.bashrc or
+   ~/.bash_profile file:
 
->If you already have `gowatch` installed, updating `gowatch` is simple:
+```sh
+export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$PATH"
+```
 
-```
-go get -u github.com/silenceper/gowatch
-```
 ## Usage
+
 ```
 cd /path/to/myapp
 ```
+
 Start gowatch:
 
 ```
 gowatch
 ```
 
-
-Gowatch will watch for file events, and every time you create/modify/delete a file it will build and restart the application,If `go build` returns an error, it will log it in stdout.
+Gowatch will watch for file events, and every time you create/modify/delete a
+file it will build and restart the application,If `go build` returns an error,
+it will log it in stdout.
 
 ### Support Options
 
 - -o : Not required, specify the target file path for the build
 - -p : Not required, specify the package to be built (can also be a single file)
-- -args: Not required, specify program runtime parameters, for example: -args = '-host =: 8080, -name = demo'
+- -args: Not required, specify program runtime parameters, for example: -args =
+  '-host =: 8080, -name = demo'
 - -v: Not required, display gowatch version information
 - -l: Not required, specify the log level, default is debug
 - -h: Not required, show usage
@@ -52,13 +68,18 @@ example:
 
 ### Configuration file
 
-In most cases, you don't need to specify the configuration. You can meet most of the requirements by directly executing the `gowatch` command.
+In most cases, you don't need to specify the configuration. You can meet most of
+the requirements by directly executing the `gowatch` command.
 
-You can initialize the gowatch.yml configuration file to the current directory with the default settings running the following command.
+You can initialize the gowatch.yml configuration file to the current directory
+with the default settings running the following command.
+
 ```
 gowatch init
 ```
+
 Create a `gowatch.yml` file in the execution directory:
+
 ```
 # gowatch.yml configuration example
 
@@ -115,7 +136,7 @@ log_level: "debug"
 ```
 
 ## Author
+
 [@silenceper](http://silenceper.com)
 
-
->Inspired by [bee](https://github.com/beego/bee)
+> Inspired by [bee](https://github.com/beego/bee)
