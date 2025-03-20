@@ -94,6 +94,12 @@ build_tags: ""
 # 是否禁止自动运行
 disable_run: false
 
+# 编译时使用GOGC，false强制不使用，true根据环境变量配置来，默认使用
+build_go_gc: false
+
+# 日志级别, 支持 debug, info, warn, error, fatal
+log_level: "debug"
+
 ```
 
 ## 微信公众号
