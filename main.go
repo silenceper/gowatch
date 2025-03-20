@@ -24,6 +24,7 @@ var (
 	showVersion bool
 	showHelp    bool
 	logLevel    string
+	confPath    string
 
 	started chan bool
 )
@@ -34,6 +35,7 @@ func init() {
 	flag.StringVar(&cmdArgs, "args", "", "app run args,separated by commas. like: -args='-host=:8080,-name=demo'")
 	flag.BoolVar(&showVersion, "v", false, "show version")
 	flag.StringVar(&logLevel, "l", "", "log level: debug, info, warn, error, fatal")
+	flag.StringVar(&confPath, "f", "", "gowatch.yml file path")
 	flag.BoolVar(&showHelp, "h", false, "help")
 }
 
@@ -125,7 +127,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	cfg = parseConfig()
+	cfg = parseConfig(confPath)
 	currpath, _ = os.Getwd()
 	if cfg.AppName == "" {
 		// The app name defaults to the directory name
