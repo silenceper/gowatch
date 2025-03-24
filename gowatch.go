@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	path "path/filepath"
@@ -135,10 +134,13 @@ func Autobuild(files []string) {
 		prevCmdExec.Stderr = os.Stderr
 		err := prevCmdExec.Run()
 		if err != nil {
-			panic(err)
+			log.Error(fmt.Sprintf("pref_build_cmds failed: %s", err.Error()))
+			time.Sleep(3 * time.Second)
+			Restart(cfg.Output, false)
 		}
 	}
 
+	time.Sleep(time.Second)
 	cmdName := "go"
 
 	var err error
@@ -347,7 +349,7 @@ func checkIfWatchExt(name string) bool {
 }
 
 func readAppDirectories(directory string, paths *[]string) {
-	fileInfos, err := ioutil.ReadDir(directory)
+	fileInfos, err := os.ReadDir(directory)
 	if err != nil {
 		return
 	}

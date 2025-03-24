@@ -5,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"io/fs"
-	"io/ioutil"
 	"os"
 	path "path/filepath"
 	"runtime"
@@ -111,7 +110,7 @@ func main() {
 	// init gowatch.yml
 	if len(os.Args) > 1 && os.Args[1] == "init" {
 		if _, err := os.Stat("gowatch.yml"); errors.Is(err, fs.ErrNotExist) {
-			_ = ioutil.WriteFile("gowatch.yml", []byte(defaultYml), 0755)
+			_ = os.WriteFile("gowatch.yml", []byte(defaultYml), 0755)
 			fmt.Println("gowatch.yml file created to the current directory with the default settings")
 		} else {
 			fmt.Println("gowatch.yml has been exists")
